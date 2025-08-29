@@ -38,7 +38,7 @@ return {
   { 'miikanissi/modus-themes.nvim' },
   --- More colorscheme if you wish
   {
-    "hyde-theme.nvim",
+    "CongLuanTran/hyde-theme.nvim",
     opts = {
       -- Optionally override theme mapping or add new mapping here
       -- ["Tokyo-Night"] = "tokyonight-moon"
