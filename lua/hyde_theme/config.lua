@@ -22,6 +22,9 @@ function M.set_map(user_map)
   end
 end
 
+-- Default value for default theme
+M.default = "default"
+
 -- Detect current GTK theme using gsettings
 function M.detect_theme()
   local handle = io.popen("gsettings get org.gnome.desktop.interface gtk-theme")
@@ -34,7 +37,8 @@ function M.detect_theme()
 
   local gtk_theme = content and tostring(content):gsub("'", ""):gsub("\n", "") or nil
 
-  return M.user_map[gtk_theme] or M.default_map[gtk_theme] or "default" -- fallback: guaranteed built-in theme
+  return M.user_map[gtk_theme] or M.default_map[gtk_theme] or M.default or
+  "default"                                                                         -- fallback: guaranteed built-in theme
 end
 
 return M
