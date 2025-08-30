@@ -1,13 +1,14 @@
 # hyde-theme.nvim
 
-This is an automatic theme switcher intended for [HyDE](https://github.com/HyDE-Project/HyDE),
+This is an automatic theme detection intended for [HyDE](https://github.com/HyDE-Project/HyDE),
 a dotfile repo for Hyprland on Arch.
 
 ## How this works
 
-This plugin basically changes your Neovim theme according to your system's GTK
-theme, which HyDE will set. It is not intended to work in isolation, you must
-have HyDE or some other ways to change your system GTK theme.
+This plugin basically map your system's GTK theme, which HyDE will set, to a
+Neovim theme. It is not intended to work in isolation, you must have HyDE or
+some other ways to change your system GTK theme. It will not try to set the
+colorscheme itself due to the complexity of colorscheme intergration in Neovim.
 
 The definition of the colorscheme itself is not shipped with the plugins, you
 will have to import their plugin yourself. Below is the default mapping of
@@ -21,8 +22,8 @@ default HyDE themes to neovim colorscheme plugins:
 - Nordic Blue: [nightfox (nordfox flavour)](https://github.com/EdenEast/nightfox.nvim)
 - The rest: I haven't decied yet
 
-You can also set your own mapping in `opts`.
-If there is no suitable mapping, Neovim's `default` scheme will be used.
+You can also set your own mapping and your default theme in `opts`. If there is
+no suitable mapping, Neovim's `default` scheme will be used.
 
 ## Installation
 
@@ -40,15 +41,19 @@ return {
   {
     "CongLuanTran/hyde-theme.nvim",
     opts = {
+      -- It is possible to set your own default theme.
+      -- For example, "astrotheme" if your use AstroNvim
+      -- default = "astrotheme"
       -- Optionally override theme mapping or add new mapping here
       -- ["Tokyo-Night"] = "tokyonight-moon"
       -- ["Your-GTK-Theme"] = "your-colorscheme"
-
-      -- you can also set autorefresh, the default is false
-      -- as well as the refresh interval, the default is 60000ms (or 60s)
-      -- autorefresh = true
-      -- interval = 30000
-    }
+    },
+    config = function(_, opts)
+      local hyde = require("hyde_theme")
+      hyde.setup(opts)
+      local theme = hyde.detect_theme()
+      vim.cmd.colorscheme(theme)
+    end,
   }
 }
 ```
