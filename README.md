@@ -27,6 +27,9 @@ no suitable mapping, Neovim's `default` scheme will be used.
 
 ## Installation
 
+IMPORTANT: the plugin doesn't set the theme for you, it just returns the name of that theme.
+You will have to change the theme manually.
+
 Use your preferred plugin manager, for example, with lazy.nvim:
 
 ```lua
